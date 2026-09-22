@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Презентация: г. Москва, ул. Челюскинская, 9</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f0f2f5;
+    color: #1F3864;
+    padding: 20px;
+  }
+  .slide {
+    display: none;
+    max-width: 1200px;
+    margin: 0 auto 20px auto;
+    background: #fff;
+    padding: 30px 40px;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  }
+  .slide.active { display: block; }
+  .slide.visible { display: block !important; }
+
+  h1 { font-size: 26px; color: #1F3864; margin-bottom: 4px; }
+  .subtitle {
+    font-size: 14px; color: #7a7a7a; margin-bottom: 18px;
+    border-bottom: 2px solid #1F3864; padding-bottom: 8px;
+  }
+  .subtitle strong { color: #1F3864; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 10px; }
+  thead th {
+    background: #1F3864; color: #fff; padding: 10px 8px;
+    text-align: left; font-weight: 600; font-size: 12px;
+  }
+  tbody td { padding: 8px; border-bottom: 1px solid #e0e0e0; }
+  tbody tr:nth-child(even) { background: #f7f9fc; }
+  .col-green { background: #e2efda !important; }
+  .col-orange { background: #fce4d6 !important; }
+  td.col-green, td.col-orange { color: #333; font-weight: 500; }
+
+  .kpi-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 14px; margin-top: 20px;
+  }
+  .kpi {
+    padding: 18px; border-radius: 8px;
+    border-left: 5px solid #1F3864; background: #f4f6fa;
+  }
+  .kpi .label { font-size: 12px; color: #7a7a7a; margin-bottom: 6px; }
+  .kpi .value { font-size: 24px; font-weight: 700; color: #1F3864; }
+  .kpi.green { border-left-color: #548235; background: #e2efda; }
+  .kpi.green .value { color: #548235; }
+  .kpi.lightgreen { border-left-color: #70ad47; background: #eaf3e3; }
+  .kpi.lightgreen .value { color: #548235; }
+  .kpi.orange { border-left-color: #ed7d31; background: #fce4d6; }
+  .kpi.orange .value { color: #c55a11; }
+  .note { font-size: 11px; color: #999; margin-top: 20px; text-align: right; }
+
+  /* === СЛАЙД 4: обновлённая вёрстка === */
+  .broker-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-top: 15px;
+    align-items: stretch;
+  }
+  .broker-col {
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #ddd;
+    display: flex;
+    flex-direction: column;
+  }
+  .broker-col .head {
+    padding: 14px;
+    color: #fff;
+    text-align: center;
+    font-weight: 700;
+    font-size: 16px;
+  }
+  .broker-col.blue .head { background: #1F3864; }
+  .broker-col.orange .head { background: #ed7d31; }
+
+  .broker-col .row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 12px;
+    align-items: start;
+    padding: 14px 16px;
+    border-bottom: 1px solid #eee;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+  .broker-col .row:last-child { border-bottom: none; }
+
+  .broker-col .row .desc {
+    word-break: break-word;
+  }
+  .broker-col .row .desc small {
+    display: block;
+    color: #888;
+    font-size: 11px;
+    margin-top: 4px;
+    line-height: 1.3;
+  }
+
+  .broker-col .row .bonus {
+    font-weight: 700;
+    font-size: 16px;
+    white-space: nowrap;
+    text-align: right;
+    min-width: 60px;
+  }
+  .broker-col.blue .row .bonus { color: #1F3864; }
+  .broker-col.orange .row .bonus { color: #c55a11; }
+
+  .warning {
+    margin-top: 16px;
+    background: #fde8e8;
+    color: #c0392b;
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 13px;
+    text-align: center;
+  }
+
+  /* === Калькулятор === */
+  .calc-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 15px; }
+  .calc-form, .calc-result { background: #f7f9fc; padding: 18px; border-radius: 8px; }
+  .calc-form label { display: block; font-size: 12px; color: #555; margin: 10px 0 4px; }
+  .calc-form input, .calc-form select {
+    width: 100%; padding: 9px; border: 1px solid #ccc;
+    border-radius: 6px; font-size: 13px; font-family: inherit;
+  }
+  .calc-form input[readonly] { background: #eef2f7; color: #1F3864; font-weight: 600; cursor: not-allowed; }
+  .toggle { display: flex; gap: 8px; margin-bottom: 8px; }
+  .toggle button {
+    flex: 1; padding: 9px; border: 1px solid #1F3864;
+    background: #fff; color: #1F3864; border-radius: 6px;
+    cursor: pointer; font-weight: 600; font-size: 13px;
+  }
+  .toggle button.active { background: #1F3864; color: #fff; }
+  .calc-result .res-row {
+    display: flex; justify-content: space-between;
+    padding: 9px 0; border-bottom: 1px dashed #ccc; font-size: 13px;
+  }
+  .calc-result .res-row.total {
+    border-top: 2px solid #1F3864; border-bottom: none;
+    margin-top: 8px; font-weight: 700; font-size: 15px; color: #548235;
+  }
+
+  .nav {
+    position: fixed; bottom: 20px; right: 20px;
+    display: flex; gap: 10px; z-index: 100;
+  }
+  .nav button {
+    width: 44px; height: 44px; border-radius: 50%;
+    border: none; background: #1F3864; color: #fff;
+    font-size: 18px; cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+  .page-ind {
+    position: fixed; bottom: 30px; left: 20px;
+    font-size: 13px; color: #7a7a7a;
+    background: #fff; padding: 6px 12px; border-radius: 6px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1); z-index: 100;
+  }
+  .showall-btn {
+    position: fixed; bottom: 20px; left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 18px; background: #ed7d31; color: #fff;
+    border: none; border-radius: 20px; cursor: pointer;
+    font-size: 13px; font-weight: 600; z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+  .showall-btn:hover { background: #d96718; }
+</style>
+</head>
+<body>
+
+<!-- СЛАЙД 1 -->
+<div class="slide active">
+  <h1>Расчёт ГАП, окупаемости и доходности</h1>
+  <div class="subtitle"><strong>г. Москва, ул. Челюскинская, 9</strong> · Помещения №1–18</div>
+  <table>
+    <thead>
+      <tr>
+        <th>№</th><th>Площадь, м²</th><th>Базовая цена, ₽</th>
+        <th>ГАП, ₽</th><th>Окупаемость, лет</th><th>Доходность, %</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td>7,70</td><td>2 844 000</td><td>258 520</td><td class="col-green">11,0</td><td class="col-orange">9,09%</td></tr>
+      <tr><td>2</td><td>16,50</td><td>5 940 000</td><td>539 946</td><td class="col-green">11,0</td><td class="col-orange">9,09%</td></tr>
+      <tr><td>3</td><td>17,80</td><td>6 920 640</td><td>629 086</td><td class="col-green">11,0</td><td class="col-orange">9,09%</td></tr>
+      <tr><td>4</td><td>12,60</td><td>4 644 000</td><td>422 140</td><td class="col-green">11,0</td><td class="col-orange">9,09%</td></tr>
+      <tr><td>5</td><td>18,40</td><td>7 076 160</td><td>643 223</td><td class="col-green">11,0</td><td class="col-orange">9,09%</td></tr>
+      <tr><td>6</td><td>15,30</td><td>6 065 280</td><td>551 334</td><td class="col-green">11,0</td><td class="col-orange">9,09%</td></tr>
+      <tr><td>7</td><td>22,70</td><td>9 059 040</td><td>823 467</td><td class="col-green">11,0</td><td class="col-orange">9,09%</td></tr>
+      <tr><td>8</td><td>47,10</td><td>20 373 120</td><td>1 851 917</td><td class="col-green">11,0</td><td class="col-orange">9,09%</td></tr>
+      <tr><td>9</td><td>26,40</td><td>9 770 112</td><td>888 103</td><td class="col-green">11,0</td><td class="col-orange">9,09%</td></tr>
+      <tr><td>10</td><td>12,20</td><td>4 500 000</td><td>409 050</td><td class="col-green">11,0</td><td class="col-orange">9,09%</td></tr>
+      <tr><td>11</td><td>13,50</td><td>4 968 000</td><td>451 591</td><td class="col-green">11,0</td><td class="col-orange">9,09%</td></tr>
+      <tr><td>12</td><td>59,50</td><td>23 911 200</td><td>2 173 528</td><td class="col-green">11,0</td><td class="col-orange">9,09%</td></tr>
+      <tr><td>13</td><td>12,50</td><td>4 644 000</td><td>422 140</td><td class="col-green">11,0</td><td class="col-orange">9,09%</td></tr>
+      <tr><td>14</td><td>18,40</td><td>7 800 422</td><td>709 058</td><td class="col-green">11,0</td><td class="col-orange">9,09%</td></tr>
+      <tr><td>15</td><td>19,60</td><td>8 269 632</td><td>751 710</td><td class="col-green">11,0</td><td class="col-orange">9,09%</td></tr>
+      <tr><td>16</td><td>34,50</td><td>13 413 600</td><td>1 219 296</td><td class="col-green">11,0</td><td class="col-orange">9,09%</td></tr>
+      <tr><td>18</td><td>72,20</td><td>28 032 480</td><td>2 548 152</td><td class="col-green">11,0</td><td class="col-orange">9,09%</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- СЛАЙД 2 -->
+<div class="slide">
+  <h1>Расчёт ГАП, окупаемости и доходности</h1>
+  <div class="subtitle"><strong>г. Москва, ул. Челюскинская, 9</strong> · Помещения №19–36</div>
+  <table>
+    <thead>
+      <tr>
+        <th>№</th><th>Площадь, м²</th><th>Базовая цена, ₽</th>
+        <th>ГАП, ₽</th><th>Окупаемость, лет</th><th>Доходность, %</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>19</td><td>29,70</td><td>9 927 360</td><td>902 397</td><td class="col-green">11,0</td><td class="col-orange">9,09%</td></tr>
+      <tr><td>20</td><td>29,10</td><td>10 016 640</td><td>910 513</td><td class="col-green">11,0</td><td class="col-orange">9,09%</td></tr>
+      <tr><td>21</td><td>23,10</td><td>7 577 280</td><td>688 775</td><td class="col-green">11,0</td><td class="col-orange">9,09%</td></tr>
+      <tr><td>22</td><td>26,70</td><td>9 001 440</td><td>818 231</td><td class="col-green">11,0</td><td class="col-orange">9,09%</td></tr>
+      <tr><td>24</td><td>66,50</td><td>28 728 000</td><td>2 611 375</td><td class="col-green">11,0</td><td class="col-orange">9,09%</td></tr>
+      <tr><td>26</td><td>39,80</td><td>19 772 640</td><td>1 797 333</td><td class="col-green">11,0</td><td class="col-orange">9,09%</td></tr>
+      <tr><td>27</td><td>74,20</td><td>28 764 000</td><td>2 614 648</td><td class="col-green">11,0</td><td class="col-orange">9,09%</td></tr>
+      <tr><td>34</td><td>11,10</td><td>4 754 880</td><td>432 219</td><td class="col-green">11,0</td><td class="col-orange">9,09%</td></tr>
+      <tr><td>35</td><td>13,80</td><td>5 765 760</td><td>524 108</td><td class="col-green">11,0</td><td class="col-orange">9,09%</td></tr>
+      <tr><td>36</td><td>19,00</td><td>7 934 400</td><td>721 237</td><td class="col-green">11,0</td><td class="col-orange">9,09%</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- СЛАЙД 3 -->
+<div class="slide">
+  <h1>Итоги портфеля</h1>
+  <div class="subtitle"><strong>г. Москва, ул. Челюскинская, 9</strong> · Ключевые показатели по 27 помещениям</div>
+  <div class="kpi-grid">
+    <div class="kpi"><div class="label">Количество помещений</div><div class="value">27</div></div>
+    <div class="kpi"><div class="label">Общая площадь</div><div class="value">759,90 м²</div></div>
+    <div class="kpi"><div class="label">Сумма базовых цен</div><div class="value">300 474 086 ₽</div></div>
+    <div class="kpi green"><div class="label">ГАП (в год)</div><div class="value">27 313 460 ₽</div></div>
+    <div class="kpi lightgreen"><div class="label">Средняя окупаемость</div><div class="value">11,0 лет</div></div>
+    <div class="kpi orange"><div class="label">Доходность аренды</div><div class="value">9,09%</div></div>
+  </div>
+  <div class="note">Все итоги рассчитаны автоматически</div>
+</div>
+
+<!-- СЛАЙД 4 — обновлённая вёрстка с двумя колонками -->
+<div class="slide">
+  <h1>Условия вознаграждения брокеров</h1>
+  <div class="subtitle"><strong>г. Москва, ул. Челюскинская, 9</strong> · Сторонние брокеры и команда МЕТРИКА</div>
+
+  <div class="broker-wrap">
+
+    <!-- ЛЕВАЯ КОЛОНКА -->
+    <div class="broker-col blue">
+      <div class="head">Сторонние брокеры</div>
+
+      <div class="row">
+        <div class="desc">Бонус при снижении базовой цены до 5% (включительно)</div>
+        <div class="bonus">2,0%</div>
+      </div>
+
+      <div class="row">
+        <div class="desc">Бонус при реализации по базовой цене</div>
+        <div class="bonus">3,0%</div>
+      </div>
+
+      <div class="row">
+        <div class="desc">
+          Дополнительный бонус при реализации выше базовой цены
+          <small>с суммы превышения + основной бонус 3,0%</small>
+        </div>
+        <div class="bonus">20%</div>
+      </div>
+    </div>
+
+    <!-- ПРАВАЯ КОЛОНКА -->
+    <div class="broker-col orange">
+      <div class="head">Команда МЕТРИКА</div>
+
+      <div class="row">
+        <div class="desc">
+          Бонус при снижении базовой цены до 5% (включительно)
+          <small>0,8% управляющий объекта + 0,2% маркетолог</small>
+        </div>
+        <div class="bonus">1,0%</div>
+      </div>
+
+      <div class="row">
+        <div class="desc">
+          Бонус при реализации по базовой цене
+          <small>1,2% управляющий объекта + 0,3% маркетолог</small>
+        </div>
+        <div class="bonus">1,5%</div>
+      </div>
+
+      <div class="row">
+        <div class="desc">
+          Дополнительный бонус при реализации выше базовой цены
+          <small>16% управляющий объекта + 4% маркетолог (с суммы превышения) + основной бонус 1,5%</small>
+        </div>
+        <div class="bonus">20%</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="warning">✕ Продажа запрещена при снижении базовой цены более 5% (5,01% и более)</div>
+</div>
+
+<!-- СЛАЙД 5 -->
+<div class="slide">
+  <h1>Калькулятор бонуса брокера</h1>
+  <div class="subtitle"><strong>г. Москва, ул. Челюскинская, 9</strong> · Введите параметры сделки — расчёт обновляется автоматически</div>
+  <div class="calc-wrap">
+    <div class="calc-form">
+      <label>Тип брокера</label>
+      <div class="toggle">
+        <button class="active" onclick="setBroker(this, 'external')">Сторонний брокер</button>
+        <button onclick="setBroker(this, 'metrika')">Команда МЕТРИКА</button>
+      </div>
+
+      <label>Помещение</label>
+      <select id="roomSelect" onchange="onRoomChange()">
+        <option value="">— выбрать помещение —</option>
+      </select>
+
+      <label>Базовая цена реализации, ₽</label>
+      <input type="text" id="basePrice" readonly placeholder="Выберите помещение...">
+
+      <label>Договорная цена реализации, ₽</label>
+      <input type="number" id="dealPrice" placeholder="Введите сумму..." oninput="calculate()">
+    </div>
+
+    <div class="calc-result">
+      <div class="res-row"><span>Базовая цена</span><span id="resBase">—</span></div>
+      <div class="res-row"><span>Договорная цена</span><span id="resDeal">—</span></div>
+      <div class="res-row"><span>Отклонение от базовой</span><span id="resDev">—</span></div>
+      <div class="res-row"><span>Основной бонус</span><span id="resMain">—</span></div>
+      <div class="res-row"><span>Дополнительный бонус</span><span id="resExtra">—</span></div>
+      <div class="res-row total"><span>Итого бонус</span><span id="resTotal">—</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- НАВИГАЦИЯ -->
+<div class="page-ind" id="pageInd">Слайд 1 из 5</div>
+<button class="showall-btn" onclick="showAll()">Показать все слайды</button>
+<div class="nav">
+  <button onclick="prevSlide()">←</button>
+  <button onclick="nextSlide()">→</button>
+</div>
+
+<script>
+  const rooms = [
+    {num:1, price:2844000}, {num:2, price:5940000}, {num:3, price:6920640},
+    {num:4, price:4644000}, {num:5, price:7076160}, {num:6, price:6065280},
+    {num:7, price:9059040}, {num:8, price:20373120}, {num:9, price:9770112},
+    {num:10, price:4500000}, {num:11, price:4968000}, {num:12, price:23911200},
+    {num:13, price:4644000}, {num:14, price:7800422}, {num:15, price:8269632},
+    {num:16, price:13413600}, {num:18, price:28032480}, {num:19, price:9927360},
+    {num:20, price:10016640}, {num:21, price:7577280}, {num:22, price:9001440},
+    {num:24, price:28728000}, {num:26, price:19772640}, {num:27, price:28764000},
+    {num:34, price:4754880}, {num:35, price:5765760}, {num:36, price:7934400}
+  ];
+
+  const roomSelect = document.getElementById('roomSelect');
+  rooms.forEach(r => {
+    const opt = document.createElement('option');
+    opt.value = r.price;
+    opt.textContent = '№' + r.num + ' · ' + r.price.toLocaleString('ru-RU') + ' ₽';
+    roomSelect.appendChild(opt);
+  });
+
+  let brokerType = 'external';
+
+  function onRoomChange() {
+    const price = roomSelect.value;
+    const baseInput = document.getElementById('basePrice');
+    if (price) {
+      baseInput.value = Number(price).toLocaleString('ru-RU') + ' ₽';
+    } else {
+      baseInput.value = '';
+    }
+    calculate();
+  }
+
+  function setBroker(btn, type) {
+    btn.parentElement.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    brokerType = type;
+    calculate();
+  }
+
+  function calculate() {
+    const base = Number(roomSelect.value) || 0;
+    const deal = Number(document.getElementById('dealPrice').value) || 0;
+
+    const resBase = document.getElementById('resBase');
+    const resDeal = document.getElementById('resDeal');
+    const resDev = document.getElementById('resDev');
+    const resMain = document.getElementById('resMain');
+    const resExtra = document.getElementById('resExtra');
+    const resTotal = document.getElementById('resTotal');
+
+    if (!base) {
+      resBase.textContent = '—';
+      resDeal.textContent = '—';
+      resDev.textContent = '—';
+      resMain.textContent = '—';
+      resExtra.textContent = '—';
+      resTotal.textContent = '—';
+      return;
+    }
+
+    resBase.textContent = base.toLocaleString('ru-RU') + ' ₽';
+    resDeal.textContent = deal ? deal.toLocaleString('ru-RU') + ' ₽' : '—';
+
+    if (!deal) {
+      resDev.textContent = '—';
+      resMain.textContent = '—';
+      resExtra.textContent = '—';
+      resTotal.textContent = '—';
+      return;
+    }
+
+    const devPercent = ((deal - base) / base) * 100;
+    const devStr = (devPercent >= 0 ? '+' : '') + devPercent.toFixed(2) + '%';
+    resDev.textContent = devStr;
+
+    let mainBonus = 0;
+    let extraBonus = 0;
+
+    if (brokerType === 'external') {
+      if (devPercent <= -5) { mainBonus = 0; }
+      else if (devPercent < 0) { mainBonus = base * 0.02; }
+      else if (devPercent === 0) { mainBonus = base * 0.03; }
+      else { mainBonus = base * 0.03; extraBonus = (deal - base) * 0.20; }
+    } else {
+      if (devPercent <= -5) { mainBonus = 0; }
+      else if (devPercent < 0) { mainBonus = base * 0.01; }
+      else if (devPercent === 0) { mainBonus = base * 0.015; }
+      else { mainBonus = base * 0.015; extraBonus = (deal - base) * 0.20; }
+    }
+
+    if (devPercent <= -5.01) {
+      resMain.textContent = 'Продажа запрещена';
+      resExtra.textContent = 'Продажа запрещена';
+      resTotal.textContent = 'Продажа запрещена';
+      resTotal.style.color = '#c0392b';
+      return;
+    }
+    resTotal.style.color = '#548235';
+
+    resMain.textContent = mainBonus.toLocaleString('ru-RU', {maximumFractionDigits:0}) + ' ₽';
+    resExtra.textContent = extraBonus.toLocaleString('ru-RU', {maximumFractionDigits:0}) + ' ₽';
+    resTotal.textContent = (mainBonus + extraBonus).toLocaleString('ru-RU', {maximumFractionDigits:0}) + ' ₽';
+  }
+
+  let current = 0;
+  const slides = document.querySelectorAll('.slide');
+  const ind = document.getElementById('pageInd');
+  let showAllMode = false;
+
+  function show(n) {
+    if (showAllMode) return;
+    slides[current].classList.remove('active');
+    current = (n + slides.length) % slides.length;
+    slides[current].classList.add('active');
+    ind.textContent = 'Слайд ' + (current + 1) + ' из ' + slides.length;
+    window.scrollTo(0, 0);
+  }
+  function nextSlide() { show(current + 1); }
+  function prevSlide() { show(current - 1); }
+
+  function showAll() {
+    showAllMode = !showAllMode;
+    if (showAllMode) {
+      slides.forEach(s => s.classList.add('visible'));
+      ind.textContent = 'Все слайды';
+      document.querySelector('.showall-btn').textContent = 'Режим по одному';
+    } else {
+      slides.forEach(s => s.classList.remove('visible'));
+      ind.textContent = 'Слайд ' + (current + 1) + ' из ' + slides.length;
+      document.querySelector('.showall-btn').textContent = 'Показать все слайды';
+    }
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight') nextSlide();
+    if (e.key === 'ArrowLeft') prevSlide();
+  });
+</script>
+
+</body>
+</html>
