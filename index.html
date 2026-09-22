@@ -2,183 +2,85 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Презентация: г. Москва, ул. Челюскинская, 9</title>
+<title>ГАП, окупаемость и условия продажи — Москва, ул. Челюскинская, 9</title>
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: 'Segoe UI', Arial, sans-serif;
-    background: #f0f2f5;
-    color: #1F3864;
-    padding: 20px;
-  }
-  .slide {
-    display: none;
-    max-width: 1200px;
-    margin: 0 auto 20px auto;
-    background: #fff;
-    padding: 30px 40px;
-    border-radius: 10px;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-  }
-  .slide.active { display: block; }
-  .slide.visible { display: block !important; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: #1a1a2e; overflow: hidden; }
+  .slide { display: none; width: 100vw; height: 100vh; padding: 25px 40px; background: #fff; flex-direction: column; animation: fade 0.4s ease; }
+  .slide.active { display: flex; }
+  @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
 
-  h1 { font-size: 26px; color: #1F3864; margin-bottom: 4px; }
-  .subtitle {
-    font-size: 14px; color: #7a7a7a; margin-bottom: 18px;
-    border-bottom: 2px solid #1F3864; padding-bottom: 8px;
-  }
-  .subtitle strong { color: #1F3864; }
+  h1 { font-size: 28px; color: #1F3864; font-weight: 700; margin-bottom: 4px; }
+  .subtitle { font-size: 15px; color: #595959; margin-bottom: 14px; border-bottom: 2px solid #1F3864; padding-bottom: 8px; }
 
-  table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 10px; }
-  thead th {
-    background: #1F3864; color: #fff; padding: 10px 8px;
-    text-align: left; font-weight: 600; font-size: 12px;
-  }
-  tbody td { padding: 8px; border-bottom: 1px solid #e0e0e0; }
-  tbody tr:nth-child(even) { background: #f7f9fc; }
-  .col-green { background: #e2efda !important; }
-  .col-orange { background: #fce4d6 !important; }
-  td.col-green, td.col-orange { color: #333; font-weight: 500; }
+  table { width: 100%; border-collapse: collapse; font-size: 12px; flex: 1; }
+  thead th { background: #1F3864; color: #fff; padding: 7px 8px; text-align: left; font-weight: 600; font-size: 12px; }
+  tbody td { padding: 4px 8px; border-bottom: 1px solid #e0e0e0; }
+  tbody tr:nth-child(even) { background: #F2F2F2; }
+  tbody tr:hover { background: #E2EFDA; }
+  td.num, th.num { text-align: right; }
+  td.center, th.center { text-align: center; }
+  td.payback { text-align: center; background: #E2EFDA; font-weight: 700; color: #2E7D32; }
+  td.yield { text-align: center; background: #FFF3E0; font-weight: 700; color: #E65100; }
 
-  .kpi-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: 14px; margin-top: 20px;
-  }
-  .kpi {
-    padding: 18px; border-radius: 8px;
-    border-left: 5px solid #1F3864; background: #f4f6fa;
-  }
-  .kpi .label { font-size: 12px; color: #7a7a7a; margin-bottom: 6px; }
-  .kpi .value { font-size: 24px; font-weight: 700; color: #1F3864; }
-  .kpi.green { border-left-color: #548235; background: #e2efda; }
-  .kpi.green .value { color: #548235; }
-  .kpi.lightgreen { border-left-color: #70ad47; background: #eaf3e3; }
-  .kpi.lightgreen .value { color: #548235; }
-  .kpi.orange { border-left-color: #ed7d31; background: #fce4d6; }
-  .kpi.orange .value { color: #c55a11; }
-  .note { font-size: 11px; color: #999; margin-top: 20px; text-align: right; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 25px; }
+  .stat-card { background: #F2F6FC; border-left: 6px solid #1F3864; padding: 18px 22px; border-radius: 8px; }
+  .stat-label { font-size: 14px; color: #595959; margin-bottom: 6px; }
+  .stat-value { font-size: 30px; font-weight: 700; color: #1F3864; }
+  .highlight { background: #E2EFDA; border-left-color: #2E7D32; }
+  .highlight .stat-value { color: #2E7D32; }
+  .yield-highlight { background: #FFF3E0; border-left-color: #E65100; }
+  .yield-highlight .stat-value { color: #E65100; }
 
-  /* === СЛАЙД 4: обновлённая вёрстка === */
-  .broker-wrap {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 18px;
-    margin-top: 15px;
-    align-items: stretch;
-  }
-  .broker-col {
-    border-radius: 8px;
-    overflow: hidden;
-    border: 1px solid #ddd;
-    display: flex;
-    flex-direction: column;
-  }
-  .broker-col .head {
-    padding: 14px;
-    color: #fff;
-    text-align: center;
-    font-weight: 700;
-    font-size: 16px;
-  }
-  .broker-col.blue .head { background: #1F3864; }
-  .broker-col.orange .head { background: #ed7d31; }
+  .broker-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-top: 18px; flex: 1; }
+  .broker-card { border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+  .broker-header { padding: 14px 20px; font-size: 19px; font-weight: 700; color: #fff; text-align: center; }
+  .external .broker-header { background: #1F3864; }
+  .metric .broker-header { background: #E65100; }
+  .broker-row { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; border-bottom: 1px solid #eee; gap: 12px; }
+  .broker-row:last-of-type { border-bottom: none; }
+  .broker-cond { font-size: 13px; color: #333; flex: 1; line-height: 1.4; }
+  .broker-value { font-size: 22px; font-weight: 700; white-space: nowrap; text-align: right; }
+  .external .broker-value { color: #1F3864; }
+  .metric .broker-value { color: #E65100; }
+  .broker-value .small { display: block; font-size: 10px; font-weight: 400; color: #777; margin-top: 2px; line-height: 1.3; }
+  .external { background: #F2F6FC; }
+  .metric { background: #FFF3E0; }
+  .broker-warning { margin-top: 8px; padding: 10px 16px; background: #FFEBEE; border-left: 5px solid #C62828; border-radius: 6px; font-size: 13px; color: #C62828; font-weight: 600; text-align: center; }
 
-  .broker-col .row {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 12px;
-    align-items: start;
-    padding: 14px 16px;
-    border-bottom: 1px solid #eee;
-    font-size: 13px;
-    line-height: 1.4;
-  }
-  .broker-col .row:last-child { border-bottom: none; }
+  .footer { margin-top: 10px; font-size: 11px; color: #999; display: flex; justify-content: space-between; }
 
-  .broker-col .row .desc {
-    word-break: break-word;
-  }
-  .broker-col .row .desc small {
-    display: block;
-    color: #888;
-    font-size: 11px;
-    margin-top: 4px;
-    line-height: 1.3;
-  }
+  .calc-wrap { display: grid; grid-template-columns: 1fr 1.2fr; gap: 25px; flex: 1; margin-top: 10px; }
+  .calc-form { background: #F2F6FC; border-radius: 12px; padding: 20px 24px; display: flex; flex-direction: column; gap: 16px; }
+  .calc-form label { display: block; font-size: 13px; color: #595959; margin-bottom: 6px; font-weight: 600; }
+  .calc-form select, .calc-form input { width: 100%; padding: 10px 12px; font-size: 15px; border: 2px solid #ccc; border-radius: 8px; background: #fff; color: #1F3864; font-weight: 600; outline: none; transition: 0.2s; }
+  .calc-form select:focus, .calc-form input:focus { border-color: #1F3864; }
 
-  .broker-col .row .bonus {
-    font-weight: 700;
-    font-size: 16px;
-    white-space: nowrap;
-    text-align: right;
-    min-width: 60px;
-  }
-  .broker-col.blue .row .bonus { color: #1F3864; }
-  .broker-col.orange .row .bonus { color: #c55a11; }
+  .broker-toggle { display: flex; gap: 10px; }
+  .broker-toggle button { flex: 1; padding: 12px; font-size: 14px; font-weight: 700; border: 2px solid #ccc; border-radius: 8px; background: #fff; color: #666; cursor: pointer; transition: 0.2s; }
+  .broker-toggle button.active[data-type="external"] { background: #1F3864; border-color: #1F3864; color: #fff; }
+  .broker-toggle button.active[data-type="metric"] { background: #E65100; border-color: #E65100; color: #fff; }
 
-  .warning {
-    margin-top: 16px;
-    background: #fde8e8;
-    color: #c0392b;
-    padding: 12px 16px;
-    border-radius: 6px;
-    font-weight: 600;
-    font-size: 13px;
-    text-align: center;
-  }
+  .calc-result { background: #fff; border-radius: 12px; padding: 22px 26px; box-shadow: 0 4px 16px rgba(0,0,0,0.08); display: flex; flex-direction: column; justify-content: space-between; }
+  .calc-result h3 { font-size: 16px; color: #1F3864; margin-bottom: 12px; border-bottom: 2px solid #E2EFDA; padding-bottom: 8px; }
+  .result-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px dashed #e0e0e0; font-size: 14px; color: #333; }
+  .result-row:last-of-type { border-bottom: none; }
+  .result-row .label { color: #595959; }
+  .result-row .value { font-weight: 700; color: #1F3864; }
+  .result-row.total { margin-top: 10px; padding-top: 14px; border-top: 2px solid #1F3864; font-size: 18px; }
+  .result-row.total .value { font-size: 26px; color: #2E7D32; }
+  .result-row.total.metric-total .value { color: #E65100; }
+  .result-row.total.blocked { border-top-color: #C62828; background: #FFEBEE; padding-left: 10px; padding-right: 10px; border-radius: 6px; margin-top: 15px; }
+  .result-row.total.blocked .label { color: #C62828; font-weight: 700; }
+  .result-row.total.blocked .value { color: #C62828; font-size: 22px; }
 
-  /* === Калькулятор === */
-  .calc-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 15px; }
-  .calc-form, .calc-result { background: #f7f9fc; padding: 18px; border-radius: 8px; }
-  .calc-form label { display: block; font-size: 12px; color: #555; margin: 10px 0 4px; }
-  .calc-form input, .calc-form select {
-    width: 100%; padding: 9px; border: 1px solid #ccc;
-    border-radius: 6px; font-size: 13px; font-family: inherit;
-  }
-  .calc-form input[readonly] { background: #eef2f7; color: #1F3864; font-weight: 600; cursor: not-allowed; }
-  .toggle { display: flex; gap: 8px; margin-bottom: 8px; }
-  .toggle button {
-    flex: 1; padding: 9px; border: 1px solid #1F3864;
-    background: #fff; color: #1F3864; border-radius: 6px;
-    cursor: pointer; font-weight: 600; font-size: 13px;
-  }
-  .toggle button.active { background: #1F3864; color: #fff; }
-  .calc-result .res-row {
-    display: flex; justify-content: space-between;
-    padding: 9px 0; border-bottom: 1px dashed #ccc; font-size: 13px;
-  }
-  .calc-result .res-row.total {
-    border-top: 2px solid #1F3864; border-bottom: none;
-    margin-top: 8px; font-weight: 700; font-size: 15px; color: #548235;
-  }
+  .result-note { margin-top: 12px; font-size: 11px; color: #999; font-style: italic; line-height: 1.5; }
+  .result-note.blocked-note { color: #C62828; font-weight: 600; font-style: normal; }
 
-  .nav {
-    position: fixed; bottom: 20px; right: 20px;
-    display: flex; gap: 10px; z-index: 100;
-  }
-  .nav button {
-    width: 44px; height: 44px; border-radius: 50%;
-    border: none; background: #1F3864; color: #fff;
-    font-size: 18px; cursor: pointer;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-  }
-  .page-ind {
-    position: fixed; bottom: 30px; left: 20px;
-    font-size: 13px; color: #7a7a7a;
-    background: #fff; padding: 6px 12px; border-radius: 6px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.1); z-index: 100;
-  }
-  .showall-btn {
-    position: fixed; bottom: 20px; left: 50%;
-    transform: translateX(-50%);
-    padding: 10px 18px; background: #ed7d31; color: #fff;
-    border: none; border-radius: 20px; cursor: pointer;
-    font-size: 13px; font-weight: 600; z-index: 100;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-  }
-  .showall-btn:hover { background: #d96718; }
+  .nav { position: fixed; bottom: 15px; right: 20px; display: flex; gap: 8px; z-index: 10; }
+  .nav button { background: #1F3864; color: #fff; border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 18px; cursor: pointer; opacity: 0.7; transition: 0.2s; }
+  .nav button:hover { opacity: 1; }
+  .page-indicator { position: fixed; bottom: 22px; left: 20px; color: #1F3864; font-size: 14px; font-weight: 600; z-index: 10; }
 </style>
 </head>
 <body>
@@ -186,324 +88,355 @@
 <!-- СЛАЙД 1 -->
 <div class="slide active">
   <h1>Расчёт ГАП, окупаемости и доходности</h1>
-  <div class="subtitle"><strong>г. Москва, ул. Челюскинская, 9</strong> · Помещения №1–18</div>
+  <div class="subtitle">г. Москва, ул. Челюскинская, 9 · Помещения (часть 1 из 2)</div>
   <table>
-    <thead>
-      <tr>
-        <th>№</th><th>Площадь, м²</th><th>Базовая цена, ₽</th>
-        <th>ГАП, ₽</th><th>Окупаемость, лет</th><th>Доходность, %</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr><td>1</td><td>7,70</td><td>2 844 000</td><td>258 520</td><td class="col-green">11,0</td><td class="col-orange">9,09%</td></tr>
-      <tr><td>2</td><td>16,50</td><td>5 940 000</td><td>539 946</td><td class="col-green">11,0</td><td class="col-orange">9,09%</td></tr>
-      <tr><td>3</td><td>17,80</td><td>6 920 640</td><td>629 086</td><td class="col-green">11,0</td><td class="col-orange">9,09%</td></tr>
-      <tr><td>4</td><td>12,60</td><td>4 644 000</td><td>422 140</td><td class="col-green">11,0</td><td class="col-orange">9,09%</td></tr>
-      <tr><td>5</td><td>18,40</td><td>7 076 160</td><td>643 223</td><td class="col-green">11,0</td><td class="col-orange">9,09%</td></tr>
-      <tr><td>6</td><td>15,30</td><td>6 065 280</td><td>551 334</td><td class="col-green">11,0</td><td class="col-orange">9,09%</td></tr>
-      <tr><td>7</td><td>22,70</td><td>9 059 040</td><td>823 467</td><td class="col-green">11,0</td><td class="col-orange">9,09%</td></tr>
-      <tr><td>8</td><td>47,10</td><td>20 373 120</td><td>1 851 917</td><td class="col-green">11,0</td><td class="col-orange">9,09%</td></tr>
-      <tr><td>9</td><td>26,40</td><td>9 770 112</td><td>888 103</td><td class="col-green">11,0</td><td class="col-orange">9,09%</td></tr>
-      <tr><td>10</td><td>12,20</td><td>4 500 000</td><td>409 050</td><td class="col-green">11,0</td><td class="col-orange">9,09%</td></tr>
-      <tr><td>11</td><td>13,50</td><td>4 968 000</td><td>451 591</td><td class="col-green">11,0</td><td class="col-orange">9,09%</td></tr>
-      <tr><td>12</td><td>59,50</td><td>23 911 200</td><td>2 173 528</td><td class="col-green">11,0</td><td class="col-orange">9,09%</td></tr>
-      <tr><td>13</td><td>12,50</td><td>4 644 000</td><td>422 140</td><td class="col-green">11,0</td><td class="col-orange">9,09%</td></tr>
-      <tr><td>14</td><td>18,40</td><td>7 800 422</td><td>709 058</td><td class="col-green">11,0</td><td class="col-orange">9,09%</td></tr>
-      <tr><td>15</td><td>19,60</td><td>8 269 632</td><td>751 710</td><td class="col-green">11,0</td><td class="col-orange">9,09%</td></tr>
-      <tr><td>16</td><td>34,50</td><td>13 413 600</td><td>1 219 296</td><td class="col-green">11,0</td><td class="col-orange">9,09%</td></tr>
-      <tr><td>18</td><td>72,20</td><td>28 032 480</td><td>2 548 152</td><td class="col-green">11,0</td><td class="col-orange">9,09%</td></tr>
-    </tbody>
+    <thead><tr>
+      <th class="center">№</th>
+      <th class="num">Площадь, м²</th>
+      <th class="num">Базовая цена реализации, ₽</th>
+      <th class="num">ГАП, ₽</th>
+      <th class="center">Окупаемость, лет</th>
+      <th class="center">Доходность аренды, %</th>
+    </tr></thead>
+    <tbody id="table1"></tbody>
   </table>
+  <div class="footer"><span>Стр. 1 из 5</span><span id="sum1"></span></div>
 </div>
 
 <!-- СЛАЙД 2 -->
 <div class="slide">
   <h1>Расчёт ГАП, окупаемости и доходности</h1>
-  <div class="subtitle"><strong>г. Москва, ул. Челюскинская, 9</strong> · Помещения №19–36</div>
+  <div class="subtitle">г. Москва, ул. Челюскинская, 9 · Помещения (часть 2 из 2)</div>
   <table>
-    <thead>
-      <tr>
-        <th>№</th><th>Площадь, м²</th><th>Базовая цена, ₽</th>
-        <th>ГАП, ₽</th><th>Окупаемость, лет</th><th>Доходность, %</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr><td>19</td><td>29,70</td><td>9 927 360</td><td>902 397</td><td class="col-green">11,0</td><td class="col-orange">9,09%</td></tr>
-      <tr><td>20</td><td>29,10</td><td>10 016 640</td><td>910 513</td><td class="col-green">11,0</td><td class="col-orange">9,09%</td></tr>
-      <tr><td>21</td><td>23,10</td><td>7 577 280</td><td>688 775</td><td class="col-green">11,0</td><td class="col-orange">9,09%</td></tr>
-      <tr><td>22</td><td>26,70</td><td>9 001 440</td><td>818 231</td><td class="col-green">11,0</td><td class="col-orange">9,09%</td></tr>
-      <tr><td>24</td><td>66,50</td><td>28 728 000</td><td>2 611 375</td><td class="col-green">11,0</td><td class="col-orange">9,09%</td></tr>
-      <tr><td>26</td><td>39,80</td><td>19 772 640</td><td>1 797 333</td><td class="col-green">11,0</td><td class="col-orange">9,09%</td></tr>
-      <tr><td>27</td><td>74,20</td><td>28 764 000</td><td>2 614 648</td><td class="col-green">11,0</td><td class="col-orange">9,09%</td></tr>
-      <tr><td>34</td><td>11,10</td><td>4 754 880</td><td>432 219</td><td class="col-green">11,0</td><td class="col-orange">9,09%</td></tr>
-      <tr><td>35</td><td>13,80</td><td>5 765 760</td><td>524 108</td><td class="col-green">11,0</td><td class="col-orange">9,09%</td></tr>
-      <tr><td>36</td><td>19,00</td><td>7 934 400</td><td>721 237</td><td class="col-green">11,0</td><td class="col-orange">9,09%</td></tr>
-    </tbody>
+    <thead><tr>
+      <th class="center">№</th>
+      <th class="num">Площадь, м²</th>
+      <th class="num">Базовая цена реализации, ₽</th>
+      <th class="num">ГАП, ₽</th>
+      <th class="center">Окупаемость, лет</th>
+      <th class="center">Доходность аренды, %</th>
+    </tr></thead>
+    <tbody id="table2"></tbody>
   </table>
+  <div class="footer"><span>Стр. 2 из 5</span><span id="sum2"></span></div>
 </div>
 
 <!-- СЛАЙД 3 -->
 <div class="slide">
   <h1>Итоги портфеля</h1>
-  <div class="subtitle"><strong>г. Москва, ул. Челюскинская, 9</strong> · Ключевые показатели по 27 помещениям</div>
-  <div class="kpi-grid">
-    <div class="kpi"><div class="label">Количество помещений</div><div class="value">27</div></div>
-    <div class="kpi"><div class="label">Общая площадь</div><div class="value">759,90 м²</div></div>
-    <div class="kpi"><div class="label">Сумма базовых цен</div><div class="value">300 474 086 ₽</div></div>
-    <div class="kpi green"><div class="label">ГАП (в год)</div><div class="value">27 313 460 ₽</div></div>
-    <div class="kpi lightgreen"><div class="label">Средняя окупаемость</div><div class="value">11,0 лет</div></div>
-    <div class="kpi orange"><div class="label">Доходность аренды</div><div class="value">9,09%</div></div>
+  <div class="subtitle">г. Москва, ул. Челюскинская, 9 · Ключевые показатели</div>
+  <div class="stats">
+    <div class="stat-card"><div class="stat-label">Количество помещений</div><div class="stat-value" id="stat-count">—</div></div>
+    <div class="stat-card"><div class="stat-label">Общая площадь</div><div class="stat-value" id="stat-area">—</div></div>
+    <div class="stat-card"><div class="stat-label">Сумма базовых цен</div><div class="stat-value" id="stat-price">—</div></div>
+    <div class="stat-card highlight"><div class="stat-label">ГАП (в год)</div><div class="stat-value" id="stat-gap">—</div></div>
+    <div class="stat-card highlight"><div class="stat-label">Срок окупаемости</div><div class="stat-value" id="stat-payback">—</div></div>
+    <div class="stat-card yield-highlight"><div class="stat-label">Доходность аренды</div><div class="stat-value" id="stat-yield">—</div></div>
   </div>
-  <div class="note">Все итоги рассчитаны автоматически</div>
+  <div class="footer"><span>Стр. 3 из 5</span><span>Все итоги рассчитаны автоматически</span></div>
 </div>
 
-<!-- СЛАЙД 4 — обновлённая вёрстка с двумя колонками -->
+<!-- СЛАЙД 4 -->
 <div class="slide">
   <h1>Условия вознаграждения брокеров</h1>
-  <div class="subtitle"><strong>г. Москва, ул. Челюскинская, 9</strong> · Сторонние брокеры и команда МЕТРИКА</div>
-
-  <div class="broker-wrap">
-
-    <!-- ЛЕВАЯ КОЛОНКА -->
-    <div class="broker-col blue">
-      <div class="head">Сторонние брокеры</div>
-
-      <div class="row">
-        <div class="desc">Бонус при снижении базовой цены до 5% (включительно)</div>
-        <div class="bonus">2,0%</div>
-      </div>
-
-      <div class="row">
-        <div class="desc">Бонус при реализации по базовой цене</div>
-        <div class="bonus">3,0%</div>
-      </div>
-
-      <div class="row">
-        <div class="desc">
-          Дополнительный бонус при реализации выше базовой цены
-          <small>с суммы превышения + основной бонус 3,0%</small>
-        </div>
-        <div class="bonus">20%</div>
-      </div>
+  <div class="subtitle">г. Москва, ул. Челюскинская, 9 · Сторонние брокеры и команда МЕТРИКА</div>
+  <div class="broker-grid">
+    <div class="broker-card external">
+      <div class="broker-header">Сторонние брокеры</div>
+      <div class="broker-row"><div class="broker-cond">Бонус при снижении базовой цены до 5% (включительно)</div><div class="broker-value">2,0%</div></div>
+      <div class="broker-row"><div class="broker-cond">Бонус при реализации по базовой цене</div><div class="broker-value">3,0%</div></div>
+      <div class="broker-row"><div class="broker-cond">Дополнительный бонус при реализации выше базовой цены</div><div class="broker-value">20%<span class="small">с суммы превышения<br>+ основной бонус 3,0%</span></div></div>
     </div>
-
-    <!-- ПРАВАЯ КОЛОНКА -->
-    <div class="broker-col orange">
-      <div class="head">Команда МЕТРИКА</div>
-
-      <div class="row">
-        <div class="desc">
-          Бонус при снижении базовой цены до 5% (включительно)
-          <small>0,8% управляющий объекта + 0,2% маркетолог</small>
-        </div>
-        <div class="bonus">1,0%</div>
-      </div>
-
-      <div class="row">
-        <div class="desc">
-          Бонус при реализации по базовой цене
-          <small>1,2% управляющий объекта + 0,3% маркетолог</small>
-        </div>
-        <div class="bonus">1,5%</div>
-      </div>
-
-      <div class="row">
-        <div class="desc">
-          Дополнительный бонус при реализации выше базовой цены
-          <small>16% управляющий объекта + 4% маркетолог (с суммы превышения) + основной бонус 1,5%</small>
-        </div>
-        <div class="bonus">20%</div>
-      </div>
+    <div class="broker-card metric">
+      <div class="broker-header">Команда МЕТРИКА</div>
+      <div class="broker-row"><div class="broker-cond">Бонус при снижении базовой цены до 5% (включительно)</div><div class="broker-value">1,0%<span class="small">0,8% управляющий объекта<br>+ 0,2% маркетолог</span></div></div>
+      <div class="broker-row"><div class="broker-cond">Бонус при реализации по базовой цене</div><div class="broker-value">1,5%<span class="small">1,2% управляющий объекта<br>+ 0,3% маркетолог</span></div></div>
+      <div class="broker-row"><div class="broker-cond">Дополнительный бонус при реализации выше базовой цены</div><div class="broker-value">20%<span class="small">16% управляющий объекта<br>+ 4% маркетолог<br>(с суммы превышения)<br>+ основной бонус 1,5%</span></div></div>
     </div>
-
   </div>
-
-  <div class="warning">✕ Продажа запрещена при снижении базовой цены более 5% (5,01% и более)</div>
+  <div class="broker-warning">❌ Продажа запрещена при снижении базовой цены более 5% (5,01% и более)</div>
+  <div class="footer"><span>Стр. 4 из 5</span><span>Вознаграждение рассчитывается от базовой цены реализации</span></div>
 </div>
 
 <!-- СЛАЙД 5 -->
 <div class="slide">
   <h1>Калькулятор бонуса брокера</h1>
-  <div class="subtitle"><strong>г. Москва, ул. Челюскинская, 9</strong> · Введите параметры сделки — расчёт обновляется автоматически</div>
+  <div class="subtitle">г. Москва, ул. Челюскинская, 9 · Введите параметры сделки</div>
   <div class="calc-wrap">
     <div class="calc-form">
-      <label>Тип брокера</label>
-      <div class="toggle">
-        <button class="active" onclick="setBroker(this, 'external')">Сторонний брокер</button>
-        <button onclick="setBroker(this, 'metrika')">Команда МЕТРИКА</button>
+      <div>
+        <label>Тип брокера</label>
+        <div class="broker-toggle">
+          <button type="button" class="active" data-type="external" onclick="setBroker('external')">Сторонний брокер</button>
+          <button type="button" data-type="metric" onclick="setBroker('metric')">Команда МЕТРИКА</button>
+        </div>
       </div>
-
-      <label>Помещение</label>
-      <select id="roomSelect" onchange="onRoomChange()">
-        <option value="">— выбрать помещение —</option>
-      </select>
-
-      <label>Базовая цена реализации, ₽</label>
-      <input type="text" id="basePrice" readonly placeholder="Выберите помещение...">
-
-      <label>Договорная цена реализации, ₽</label>
-      <input type="number" id="dealPrice" placeholder="Введите сумму..." oninput="calculate()">
+      <div>
+        <label>Помещение</label>
+        <select id="calc-room" onchange="onRoomChange()"><option value="">— выбрать помещение —</option></select>
+      </div>
+      <div>
+        <label>Базовая цена реализации, ₽</label>
+        <input type="text" id="calc-base" value="" placeholder="Введите сумму...">
+      </div>
+      <div>
+        <label>Договорная цена реализации, ₽</label>
+        <input type="text" id="calc-plan" value="" placeholder="Введите сумму...">
+        <div style="font-size:11px;color:#999;margin-top:4px;">Введите договорную цену сделки</div>
+      </div>
     </div>
-
     <div class="calc-result">
-      <div class="res-row"><span>Базовая цена</span><span id="resBase">—</span></div>
-      <div class="res-row"><span>Договорная цена</span><span id="resDeal">—</span></div>
-      <div class="res-row"><span>Отклонение от базовой</span><span id="resDev">—</span></div>
-      <div class="res-row"><span>Основной бонус</span><span id="resMain">—</span></div>
-      <div class="res-row"><span>Дополнительный бонус</span><span id="resExtra">—</span></div>
-      <div class="res-row total"><span>Итого бонус</span><span id="resTotal">—</span></div>
+      <h3>Результат расчёта</h3>
+      <div class="result-row"><span class="label">Базовая цена</span><span class="value" id="res-base">—</span></div>
+      <div class="result-row"><span class="label">Договорная цена</span><span class="value" id="res-plan">—</span></div>
+      <div class="result-row"><span class="label">Отклонение от базовой</span><span class="value" id="res-diff">—</span></div>
+      <div class="result-row"><span class="label">Основной бонус</span><span class="value" id="res-main">—</span></div>
+      <div class="result-row"><span class="label">Дополнительный бонус</span><span class="value" id="res-over">—</span></div>
+      <div class="result-row total" id="res-total-row"><span class="label">Итого бонус</span><span class="value" id="res-total">—</span></div>
+      <div class="result-note" id="res-note">Выберите помещение и введите договорную цену</div>
     </div>
   </div>
+  <div class="footer"><span>Стр. 5 из 5</span><span>Условия соответствуют слайду 4</span></div>
 </div>
 
-<!-- НАВИГАЦИЯ -->
-<div class="page-ind" id="pageInd">Слайд 1 из 5</div>
-<button class="showall-btn" onclick="showAll()">Показать все слайды</button>
+<div class="page-indicator" id="indicator">1 / 5</div>
 <div class="nav">
-  <button onclick="prevSlide()">←</button>
-  <button onclick="nextSlide()">→</button>
+  <button onclick="prev()">‹</button>
+  <button onclick="next()">›</button>
 </div>
 
 <script>
-  const rooms = [
-    {num:1, price:2844000}, {num:2, price:5940000}, {num:3, price:6920640},
-    {num:4, price:4644000}, {num:5, price:7076160}, {num:6, price:6065280},
-    {num:7, price:9059040}, {num:8, price:20373120}, {num:9, price:9770112},
-    {num:10, price:4500000}, {num:11, price:4968000}, {num:12, price:23911200},
-    {num:13, price:4644000}, {num:14, price:7800422}, {num:15, price:8269632},
-    {num:16, price:13413600}, {num:18, price:28032480}, {num:19, price:9927360},
-    {num:20, price:10016640}, {num:21, price:7577280}, {num:22, price:9001440},
-    {num:24, price:28728000}, {num:26, price:19772640}, {num:27, price:28764000},
-    {num:34, price:4754880}, {num:35, price:5765760}, {num:36, price:7934400}
+  // ============ ДАННЫЕ (№, площадь, базовая цена) ============
+  const data1 = [
+    [1, 7.70, 2844000],
+    [2, 16.50, 5940000],
+    [3, 17.80, 6920640],
+    [4, 12.60, 4644000],
+    [5, 18.40, 7076160],
+    [6, 15.30, 6065280],
+    [7, 22.70, 9059040],
+    [8, 47.10, 20373120],
+    [9, 26.40, 9770112],
+    [10, 12.20, 4500000],
+    [11, 13.50, 4968000],
+    [12, 59.50, 23911200],
+    [13, 12.50, 4644000],
+    [14, 18.40, 7800422],
+    [15, 19.60, 8269632],
+    [16, 34.50, 13413600],
+    [18, 72.20, 28032480]
+  ];
+  const data2 = [
+    [19, 29.70, 9927360],
+    [20, 29.10, 10016640],
+    [21, 23.10, 7577280],
+    [22, 26.70, 9001440],
+    [24, 66.50, 28728000],
+    [26, 39.80, 19772640],
+    [27, 74.20, 28764000],
+    [34, 11.10, 4754880],
+    [35, 13.80, 5765760],
+    [36, 19.00, 7934400]
   ];
 
-  const roomSelect = document.getElementById('roomSelect');
-  rooms.forEach(r => {
+  const PAYBACK_YEARS = 12;
+  const allData = [...data1, ...data2];
+
+  // ============ ФОРМАТ ============
+  function fmt(n) { return Math.round(n).toLocaleString('ru-RU'); }
+  function fmt2(n) { return n.toLocaleString('ru-RU', {minimumFractionDigits:2, maximumFractionDigits:2}); }
+  function fmt1(n) { return n.toLocaleString('ru-RU', {minimumFractionDigits:1, maximumFractionDigits:1}); }
+
+  // ============ ТАБЛИЦЫ ============
+  function fillTable(id, data) {
+    const tbody = document.getElementById(id);
+    let sArea = 0, sPrice = 0, sGap = 0;
+    data.forEach(([num, area, price]) => {
+      const gap = price / PAYBACK_YEARS;   // ГАП = цена / 12
+      const payback = PAYBACK_YEARS;
+      const yieldPct = 100 / PAYBACK_YEARS; // 8.33%
+      sArea += area; sPrice += price; sGap += gap;
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td class="center">${num}</td>
+        <td class="num">${fmt2(area)}</td>
+        <td class="num">${fmt(price)}</td>
+        <td class="num">${fmt(gap)}</td>
+        <td class="payback">${fmt1(payback)}</td>
+        <td class="yield">${fmt2(yieldPct)}%</td>
+      `;
+      tbody.appendChild(tr);
+    });
+    return { sArea, sPrice, sGap };
+  }
+
+  const r1 = fillTable('table1', data1);
+  const r2 = fillTable('table2', data2);
+  document.getElementById('sum1').textContent = `Итого: ${fmt2(r1.sArea)} м² | ${fmt(r1.sPrice)} ₽ | ГАП ${fmt(r1.sGap)} ₽`;
+  document.getElementById('sum2').textContent = `Итого: ${fmt2(r2.sArea)} м² | ${fmt(r2.sPrice)} ₽ | ГАП ${fmt(r2.sGap)} ₽`;
+
+  // ============ ИТОГИ ============
+  const totalCount = allData.length;
+  const totalArea = r1.sArea + r2.sArea;
+  const totalPrice = r1.sPrice + r2.sPrice;
+  const totalGap = r1.sGap + r2.sGap;
+
+  document.getElementById('stat-count').textContent = totalCount;
+  document.getElementById('stat-area').textContent = fmt2(totalArea) + ' м²';
+  document.getElementById('stat-price').textContent = fmt(totalPrice) + ' ₽';
+  document.getElementById('stat-gap').textContent = fmt(totalGap) + ' ₽';
+  document.getElementById('stat-payback').textContent = fmt1(PAYBACK_YEARS) + ' лет';
+  document.getElementById('stat-yield').textContent = fmt2(100 / PAYBACK_YEARS) + '%';
+
+  // ============ КАЛЬКУЛЯТОР ============
+  let brokerType = 'external';
+  const roomSelect = document.getElementById('calc-room');
+  allData.forEach(([num, area, price]) => {
     const opt = document.createElement('option');
-    opt.value = r.price;
-    opt.textContent = '№' + r.num + ' · ' + r.price.toLocaleString('ru-RU') + ' ₽';
+    opt.value = num;
+    opt.textContent = `№${num} — ${fmt2(area)} м² — база ${fmt(price)} ₽`;
+    opt.dataset.price = price;
     roomSelect.appendChild(opt);
   });
 
-  let brokerType = 'external';
+  function setBroker(type) {
+    brokerType = type;
+    document.querySelectorAll('.broker-toggle button').forEach(b => {
+      b.classList.toggle('active', b.dataset.type === type);
+    });
+    calc();
+  }
 
   function onRoomChange() {
-    const price = roomSelect.value;
-    const baseInput = document.getElementById('basePrice');
-    if (price) {
-      baseInput.value = Number(price).toLocaleString('ru-RU') + ' ₽';
+    const opt = roomSelect.options[roomSelect.selectedIndex];
+    const baseInput = document.getElementById('calc-base');
+    const planInput = document.getElementById('calc-plan');
+    if (opt && opt.dataset.price) {
+      const base = Number(opt.dataset.price);
+      baseInput.value = fmt(base);
+      planInput.value = fmt(base);
     } else {
       baseInput.value = '';
+      planInput.value = '';
     }
-    calculate();
+    calc();
   }
 
-  function setBroker(btn, type) {
-    btn.parentElement.querySelectorAll('button').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    brokerType = type;
-    calculate();
+  document.getElementById('calc-plan').addEventListener('input', function() {
+    let v = this.value.replace(/\D/g, '');
+    if (v === '') { this.value = ''; calc(); return; }
+    this.value = Number(v).toLocaleString('ru-RU');
+    calc();
+  });
+  document.getElementById('calc-base').addEventListener('input', function() {
+    let v = this.value.replace(/\D/g, '');
+    if (v === '') { this.value = ''; calc(); return; }
+    this.value = Number(v).toLocaleString('ru-RU');
+    calc();
+  });
+
+  function parseNum(str) {
+    if (!str) return NaN;
+    return Number(String(str).replace(/\s/g, '').replace(/[^\d.]/g, ''));
   }
 
-  function calculate() {
-    const base = Number(roomSelect.value) || 0;
-    const deal = Number(document.getElementById('dealPrice').value) || 0;
+  function calc() {
+    const base = parseNum(document.getElementById('calc-base').value);
+    const plan = parseNum(document.getElementById('calc-plan').value);
 
-    const resBase = document.getElementById('resBase');
-    const resDeal = document.getElementById('resDeal');
-    const resDev = document.getElementById('resDev');
-    const resMain = document.getElementById('resMain');
-    const resExtra = document.getElementById('resExtra');
-    const resTotal = document.getElementById('resTotal');
+    document.getElementById('res-base').textContent = isNaN(base) ? '—' : fmt(base) + ' ₽';
+    document.getElementById('res-plan').textContent = isNaN(plan) ? '—' : fmt(plan) + ' ₽';
 
-    if (!base) {
-      resBase.textContent = '—';
-      resDeal.textContent = '—';
-      resDev.textContent = '—';
-      resMain.textContent = '—';
-      resExtra.textContent = '—';
-      resTotal.textContent = '—';
+    const diffEl = document.getElementById('res-diff');
+    const mainEl = document.getElementById('res-main');
+    const overEl = document.getElementById('res-over');
+    const totalEl = document.getElementById('res-total');
+    const totalRow = document.getElementById('res-total-row');
+    const noteEl = document.getElementById('res-note');
+
+    totalRow.classList.remove('blocked', 'metric-total');
+    noteEl.classList.remove('blocked-note');
+
+    if (isNaN(base) || isNaN(plan) || base <= 0 || plan <= 0) {
+      diffEl.textContent = '—';
+      mainEl.textContent = '—';
+      overEl.textContent = '—';
+      totalEl.textContent = '—';
+      noteEl.textContent = 'Выберите помещение и введите договорную цену';
       return;
     }
 
-    resBase.textContent = base.toLocaleString('ru-RU') + ' ₽';
-    resDeal.textContent = deal ? deal.toLocaleString('ru-RU') + ' ₽' : '—';
+    const diff = plan - base;
+    const diffPct = (diff / base) * 100;
 
-    if (!deal) {
-      resDev.textContent = '—';
-      resMain.textContent = '—';
-      resExtra.textContent = '—';
-      resTotal.textContent = '—';
-      return;
-    }
+    let diffStr = fmt(diff) + ' ₽';
+    if (diff !== 0) diffStr += ` (${diff > 0 ? '+' : ''}${fmt2(diffPct)}%)`;
+    else diffStr = '0 ₽ (0,00%)';
+    diffEl.textContent = diffStr;
+    diffEl.style.color = diff > 0 ? '#2E7D32' : (diff < 0 ? '#C62828' : '#333');
 
-    const devPercent = ((deal - base) / base) * 100;
-    const devStr = (devPercent >= 0 ? '+' : '') + devPercent.toFixed(2) + '%';
-    resDev.textContent = devStr;
+    let ratePct = 0, overBonus = 0, noteText = '', blocked = false;
 
-    let mainBonus = 0;
-    let extraBonus = 0;
-
-    if (brokerType === 'external') {
-      if (devPercent <= -5) { mainBonus = 0; }
-      else if (devPercent < 0) { mainBonus = base * 0.02; }
-      else if (devPercent === 0) { mainBonus = base * 0.03; }
-      else { mainBonus = base * 0.03; extraBonus = (deal - base) * 0.20; }
+    if (diff < 0) {
+      const drop = Math.abs(diffPct);
+      if (drop <= 5) {
+        ratePct = brokerType === 'external' ? 2.0 : 1.0;
+        noteText = 'Снижение базовой цены до 5% включительно — основной бонус';
+      } else {
+        blocked = true;
+        noteText = '❌ ПРОДАЖА ЗАПРЕЩЕНА: снижение цены превышает 5%';
+      }
+    } else if (diff === 0) {
+      ratePct = brokerType === 'external' ? 3.0 : 1.5;
+      noteText = 'Реализация по базовой цене — только основной бонус';
     } else {
-      if (devPercent <= -5) { mainBonus = 0; }
-      else if (devPercent < 0) { mainBonus = base * 0.01; }
-      else if (devPercent === 0) { mainBonus = base * 0.015; }
-      else { mainBonus = base * 0.015; extraBonus = (deal - base) * 0.20; }
+      ratePct = brokerType === 'external' ? 3.0 : 1.5;
+      overBonus = diff * 0.20;
+      noteText = 'Реализация выше базовой: основной бонус + 20% с суммы превышения';
     }
 
-    if (devPercent <= -5.01) {
-      resMain.textContent = 'Продажа запрещена';
-      resExtra.textContent = 'Продажа запрещена';
-      resTotal.textContent = 'Продажа запрещена';
-      resTotal.style.color = '#c0392b';
+    if (blocked) {
+      totalRow.classList.add('blocked');
+      mainEl.textContent = '0 ₽';
+      overEl.textContent = '—';
+      totalEl.textContent = 'Продажа запрещена';
+      noteEl.textContent = noteText;
+      noteEl.classList.add('blocked-note');
       return;
     }
-    resTotal.style.color = '#548235';
 
-    resMain.textContent = mainBonus.toLocaleString('ru-RU', {maximumFractionDigits:0}) + ' ₽';
-    resExtra.textContent = extraBonus.toLocaleString('ru-RU', {maximumFractionDigits:0}) + ' ₽';
-    resTotal.textContent = (mainBonus + extraBonus).toLocaleString('ru-RU', {maximumFractionDigits:0}) + ' ₽';
+    const mainBonus = base * ratePct / 100;
+    const totalBonus = mainBonus + overBonus;
+
+    totalRow.classList.toggle('metric-total', brokerType === 'metric');
+
+    mainEl.textContent = mainBonus > 0 ? `${fmt(mainBonus)} ₽ (${fmt2(ratePct)}%)` : '0 ₽';
+    overEl.textContent = overBonus > 0 ? `${fmt(overBonus)} ₽ (20% от ${fmt(diff)})` : '—';
+    totalEl.textContent = fmt(totalBonus) + ' ₽';
+    noteEl.textContent = noteText;
   }
 
+  calc();
+
+  // ============ НАВИГАЦИЯ ============
   let current = 0;
   const slides = document.querySelectorAll('.slide');
-  const ind = document.getElementById('pageInd');
-  let showAllMode = false;
+  const indicator = document.getElementById('indicator');
 
   function show(n) {
-    if (showAllMode) return;
     slides[current].classList.remove('active');
     current = (n + slides.length) % slides.length;
     slides[current].classList.add('active');
-    ind.textContent = 'Слайд ' + (current + 1) + ' из ' + slides.length;
-    window.scrollTo(0, 0);
+    indicator.textContent = (current + 1) + ' / ' + slides.length;
   }
-  function nextSlide() { show(current + 1); }
-  function prevSlide() { show(current - 1); }
-
-  function showAll() {
-    showAllMode = !showAllMode;
-    if (showAllMode) {
-      slides.forEach(s => s.classList.add('visible'));
-      ind.textContent = 'Все слайды';
-      document.querySelector('.showall-btn').textContent = 'Режим по одному';
-    } else {
-      slides.forEach(s => s.classList.remove('visible'));
-      ind.textContent = 'Слайд ' + (current + 1) + ' из ' + slides.length;
-      document.querySelector('.showall-btn').textContent = 'Показать все слайды';
-    }
-  }
+  function next() { show(current + 1); }
+  function prev() { show(current - 1); }
 
   document.addEventListener('keydown', e => {
-    if (e.key === 'ArrowRight') nextSlide();
-    if (e.key === 'ArrowLeft') prevSlide();
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return;
+    if (e.key === 'ArrowRight' || e.key === ' ') next();
+    if (e.key === 'ArrowLeft') prev();
   });
 </script>
-
 </body>
 </html>
